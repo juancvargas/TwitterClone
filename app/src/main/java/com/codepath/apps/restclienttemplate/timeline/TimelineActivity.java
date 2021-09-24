@@ -49,7 +49,6 @@ public class TimelineActivity extends AppCompatActivity {
         // Set layout manager to position the items
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(layoutManager);
-        // Retain an instance so that you can call `resetState()` for fresh searches
         // Triggered only when new data needs to be appended to the list
         // Add whatever code is needed to append new items to the bottom of the list
         EndlessRecyclerViewScrollListener scrollListener;
