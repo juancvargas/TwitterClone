@@ -47,10 +47,43 @@ public class TimelineActivity extends AppCompatActivity {
         // Attach the adapter to the recyclerview to populate items
         rvTweets.setAdapter(adapter);
         // Set layout manager to position the items
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(layoutManager);
+        // Retain an instance so that you can call `resetState()` for fresh searches
+        // Triggered only when new data needs to be appended to the list
+        // Add whatever code is needed to append new items to the bottom of the list
+        EndlessRecyclerViewScrollListener scrollListener;
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadMoreData();
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        rvTweets.addOnScrollListener(scrollListener);
 
         client = TwitterApp.getRestClient(this);
         populateHomeTimeline(client);
+    }
+
+    private void loadMoreData() {
+        client.getNextPageOfTweets(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                try {
+                    adapter.addAll(Tweet.getTweets(json.jsonArray));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.e(TAG, "onFailure: load more data", throwable);
+            }
+        }, tweets.get(tweets.size() - 1).getId());
     }
 
     private void populateHomeTimeline(TwitterClient client) {

@@ -16,7 +16,6 @@ import com.codepath.apps.restclienttemplate.R;
 import java.util.List;
 
 public class TweetsAdaptor extends RecyclerView.Adapter<TweetsAdaptor.ViewHolder>{
-    private final String TAG = "TweetsAdaptor";
     private final List<Tweet> mTweets;
 
     public TweetsAdaptor(List<Tweet> tweets) {
