@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate.login;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -55,8 +56,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// OAuth authentication flow failed, handle the error
 	// i.e Display an error dialog or toast
 	@Override
-	public void onLoginFailure(Exception e) {
-		e.printStackTrace();
+	public void onLoginFailure(Exception e) { Log.e(TAG, e.toString());
 	}
 
 	// Click handler method for the button used to start OAuth flow

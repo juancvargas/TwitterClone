@@ -17,7 +17,7 @@ import java.util.List;
 
 public class TweetsAdaptor extends RecyclerView.Adapter<TweetsAdaptor.ViewHolder>{
     private final String TAG = "TweetsAdaptor";
-    private List<Tweet> mTweets;
+    private final List<Tweet> mTweets;
 
     public TweetsAdaptor(List<Tweet> tweets) {
         mTweets = tweets;
@@ -40,6 +40,17 @@ public class TweetsAdaptor extends RecyclerView.Adapter<TweetsAdaptor.ViewHolder
     @Override
     public int getItemCount() {
         return mTweets.size();
+    }
+    // Clean all elements of the recycler
+    public void clear() {
+        mTweets.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items
+    public void addAll(List<Tweet> tweets) {
+        mTweets.addAll(tweets);
+        notifyDataSetChanged();
     }
 
     // Provide a direct reference to each of the views within a data item
