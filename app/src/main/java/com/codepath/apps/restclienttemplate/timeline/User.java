@@ -5,14 +5,14 @@ import org.json.JSONObject;
 
 public class User {
     private String name;
-    private String handle;
-    private String profileImgUrl;
+    private String userName;
+    private String avatarUrl;
 
     public static User fromJson(JSONObject jsonObject) throws JSONException {
         User user = new User();
         user.name = jsonObject.getString("name");
-        user.handle = jsonObject.getString("screen_name");
-        user.profileImgUrl = jsonObject.getString("profile_image_url_https");
+        user.userName = jsonObject.getString("screen_name");
+        user.avatarUrl = jsonObject.getString("profile_image_url_https");
 
         return user;
     }
@@ -21,11 +21,11 @@ public class User {
         return name;
     }
 
-    public String getHandle() {
-        return "@" + handle;
+    public String getUserName() {
+        return "@" + userName;
     }
 
-    public String getProfileImgUrl() {
-        return profileImgUrl;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 }
