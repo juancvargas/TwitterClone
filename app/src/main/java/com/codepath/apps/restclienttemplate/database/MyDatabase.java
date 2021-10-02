@@ -3,8 +3,8 @@ package com.codepath.apps.restclienttemplate.database;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import com.codepath.apps.restclienttemplate.restapi.SampleModel;
-import com.codepath.apps.restclienttemplate.restapi.SampleModelDao;
+import com.codepath.apps.restclienttemplate.rest_api.SampleModel;
+import com.codepath.apps.restclienttemplate.rest_api.SampleModelDao;
 
 @Database(entities={SampleModel.class}, version=1)
 public abstract class MyDatabase extends RoomDatabase {

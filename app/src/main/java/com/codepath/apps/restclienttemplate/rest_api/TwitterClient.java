@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.restapi;
+package com.codepath.apps.restclienttemplate.rest_api;
 
 import android.content.Context;
 
@@ -58,5 +58,12 @@ public class TwitterClient extends OAuthBaseClient {
 		params.put("count", 25);
 		params.put("max_id", max_id);
 		client.get(apiUrl, params, handler);
+	}
+
+	public void publishTweet(String tweetContent, JsonHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+		RequestParams params = new RequestParams();
+		params.put("status", tweetContent);
+		client.post(apiUrl, params, " ", handler);
 	}
 }

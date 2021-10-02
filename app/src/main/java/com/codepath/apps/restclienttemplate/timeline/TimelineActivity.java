@@ -1,19 +1,30 @@
 package com.codepath.apps.restclienttemplate.timeline;
 
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.restapi.TwitterApp;
-import com.codepath.apps.restclienttemplate.restapi.TwitterClient;
+import com.codepath.apps.restclienttemplate.R.id;
+import com.codepath.apps.restclienttemplate.compose_tweet.ComposeTweetActivity;
+import com.codepath.apps.restclienttemplate.rest_api.TwitterApp;
+import com.codepath.apps.restclienttemplate.rest_api.TwitterClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +38,7 @@ public class TimelineActivity extends AppCompatActivity {
     List<Tweet> tweets;
     RecyclerView rvTweets;
     TweetsAdaptor adapter;
+    ActivityResultLauncher<Intent> mComposeLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +74,41 @@ public class TimelineActivity extends AppCompatActivity {
         };
         // Adds the scroll listener to RecyclerView
         rvTweets.addOnScrollListener(scrollListener);
+        // handler for getting result from activity
+        mComposeLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // There are no request codes
+                        Intent data = result.getData();
+
+                        assert data != null;
+                        Parcelable tweet = data.getParcelableExtra(ComposeTweetActivity.KEY_TWEET);
+                        tweets.add(0, Parcels.unwrap(tweet));
+                        adapter.notifyItemChanged(0);
+                        rvTweets.smoothScrollToPosition(0);
+                    }
+                }
+        );
 
         client = TwitterApp.getRestClient(this);
         populateHomeTimeline(client);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == id.miCompose) {
+            Intent i = new Intent(this, ComposeTweetActivity.class);
+            mComposeLauncher.launch(i);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadMoreData() {

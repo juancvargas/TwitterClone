@@ -8,10 +8,10 @@ import android.view.Menu;
 import android.view.View;
 
 import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.restapi.SampleModel;
-import com.codepath.apps.restclienttemplate.restapi.SampleModelDao;
-import com.codepath.apps.restclienttemplate.restapi.TwitterApp;
-import com.codepath.apps.restclienttemplate.restapi.TwitterClient;
+import com.codepath.apps.restclienttemplate.rest_api.SampleModel;
+import com.codepath.apps.restclienttemplate.rest_api.SampleModelDao;
+import com.codepath.apps.restclienttemplate.rest_api.TwitterApp;
+import com.codepath.apps.restclienttemplate.rest_api.TwitterClient;
 import com.codepath.apps.restclienttemplate.timeline.TimelineActivity;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 

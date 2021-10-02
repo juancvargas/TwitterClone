@@ -1,11 +1,9 @@
-package com.codepath.apps.restclienttemplate.restapi;
+package com.codepath.apps.restclienttemplate.rest_api;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
-import com.codepath.apps.restclienttemplate.restapi.SampleModel;
 
 import java.util.List;
 
